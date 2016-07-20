@@ -1,0 +1,96 @@
+defaults:
+  host:
+    gw: 10.0.0.1
+    command:
+    - nohup sh scripts/netcat_hostname.sh &
+
+  switch:
+    p4src: p4src/vpc.p4
+    dump: true
+    port: 22222
+    verbose: 'debug'
+
+host:
+- ip: 10.0.1.1/16
+  gw: 10.0.0.1
+  name: h101c1
+  customer: 10000
+- ip: 10.0.1.2/16
+  gw: 10.0.0.1
+  name: h102c1
+  customer: 10000
+- ip: 10.0.1.3/16
+  gw: 10.0.0.1
+  name: h103c1
+  customer: 10000
+- ip: 10.0.1.1/16
+  gw: 10.0.0.1
+  name: h201c1
+  customer: 20000
+- ip: 10.0.1.2/16
+  gw: 10.0.0.1
+  name: h202c1
+  customer: 20000
+- ip: 10.0.1.3/16
+  gw: 10.0.0.1
+  name: h203c1
+  customer: 20000
+- ip: 192.168.1.1/16
+  gw: 192.168.0.1
+  name: h111c1
+  customer: 10000
+- ip: 192.168.1.2/16
+  gw: 192.168.0.1
+  name: h112c1
+  customer: 10000
+- ip: 192.168.1.3/16
+  gw: 192.168.0.1
+  name: h113c1
+  customer: 10000
+- ip: 192.168.1.1/16
+  gw: 192.168.0.1
+  name: h211c1
+  customer: 20000
+- ip: 192.168.1.2/16
+  gw: 192.168.0.1
+  name: h212c1
+  customer: 20000
+- ip: 192.168.1.3/16
+  gw: 192.168.0.1
+  name: h213c1
+  customer: 20000
+
+switch:
+- name: s101
+- name: s102
+- name: s103
+
+link:
+- source: h101c1
+  destination: s101
+- source: h102c1
+  destination: s102
+- source: h103c1
+  destination: s103
+- source: h201c1
+  destination: s101
+- source: h202c1
+  destination: s102
+- source: h203c1
+  destination: s103
+- source: h111c1
+  destination: s101
+- source: h112c1
+  destination: s102
+- source: h113c1
+  destination: s103
+- source: h211c1
+  destination: s101
+- source: h212c1
+  destination: s102
+- source: h213c1
+  destination: s103
+- source: s101
+  destination: s102
+- source: s102
+  destination: s103
