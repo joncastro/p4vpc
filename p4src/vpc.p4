@@ -113,7 +113,7 @@ action route_vpc(port) {
   modify_field(standard_metadata.egress_spec, port);
 }
 
-table routing_pvc {
+table routing_vpc {
   reads {
       vpc.dstSw : exact;
   }
@@ -130,7 +130,7 @@ action pop_route_vpc(port) {
   remove_header(vpc);
 }
 
-table deliver_pvc {
+table deliver_vpc {
   reads {
       vpc.dstSw : exact;
       vpc.customer : exact;
@@ -205,8 +205,8 @@ control ingress {
     }
     if (valid(vpc)){
       apply(l2_addr);
-      apply(routing_pvc);
-      apply(deliver_pvc);
+      apply(routing_vpc);
+      apply(deliver_vpc);
     }
 }
 

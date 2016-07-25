@@ -97,7 +97,7 @@ def run(p4topo):
             'table_add l2_addr set_l2_addr {} {} 0.0.0.0/0 {} => {} {}'.format(customer, sw_id, ip, gw_mac, mac))
 
         commands[sw_name].append(
-            'table_add deliver_pvc pop_route_vpc {} {} {}/32 => {}'.format(sw_id, customer, ip, port))
+            'table_add deliver_vpc pop_route_vpc {} {} {}/32 => {}'.format(sw_id, customer, ip, port))
 
         for remote_host_name in host_customers[customer]:
             if remote_host_name == host_name:
@@ -133,7 +133,7 @@ def run(p4topo):
 
                 first = shortest_path[0]
                 second = shortest_path[1]
-                commands[src_sw_name].append('table_add routing_pvc route_vpc {} => {}'.format(
+                commands[src_sw_name].append('table_add routing_vpc route_vpc {} => {}'.format(
                     switches[dst_sw_name]['id'], portmap[src_sw_name][second]))
 
     for sw_name in switches:
