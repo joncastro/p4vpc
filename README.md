@@ -33,17 +33,21 @@ The topology YAML file follows the [MiniP4 definition](https://github.com/p4kide
 
 ## Demo
 
-Given `p4-topo.yml` topology contains two customers with the same number of hosts and ip addresses. This demo explains how to test a host can only connect to the other hosts on the same customer in the same or different subnets.
+Given `p4-topo.yml` topology contains two customers with the same number of hosts and ip addresses. This demo explains how run and test network reachability between hosts belonging to the same customer.
+
+The topology contains two customer `red` and `blue`. Both customer contains the same number of hosts and ip addresses. Host mac addresses are unique.
+
+Each customer has two subnets: `10.0.0.0/24` and `192.168.0.0/24`.
 
 - **pinging two hosts in the same subnet**
 
-The hosts that starts the ping will first send an ARP request to discover the mac address of the destination host. Notice that the ARP request is returned directly by the P4 switch using the table `arp_reply` and this ARP request is not flooded into the network. P4 captures the ARP packet and transforms the packet into ARP reply sending it back to the host. P4 switches are pre-populated with all the mac address on the same subnet.
+The hosts that starts the ping will first send an ARP request to discover the mac address of the destination host. Notice that the ARP request is returned directly by the P4 switch using the table `arp_reply` and this ARP request is not flooded into the network. P4 captures the ARP packet and transforms the packet into ARP reply sending it back to the host. P4 switches are pre-populated with the mac addresses on the same subnet.
 
 Then, the source host sends an ICMP request to the destination switch. The initial P4 switch captures the IP packet and encapsulate into a new header type called `vpc`. This encapsulation mechanism contains the customer, source and destination switch, and source and destination IP.
 
 The packet is transmitted through the network and the egress P4 switch will remove the `vpc` header and deliver the packet to the destination host.
 
-The ICMP reply from the destination host to the source switch is treated in the same way on the other way around.
+The ICMP reply from the destination host to the source switch is treated in the same way.
 
 **Testing**
 
@@ -77,9 +81,9 @@ mininet>
 
 - **pinging two hosts in different subnets**
 
-In this case, two hosts would required a gateway (a router) in between to talk each other. Notice, this gateway does not really exists on the network. When the hosts send the ARP requests to obtain the gateway mac address, the P4 switch will capture and convert that packet into a reply with the fictitious gateway mac address.
+In this case, two hosts in different subnets require a gateway in between to talk each other. Notice, this gateway does not really exists in our topology and P4VPC emulates this non-existing gateway. When the hosts send the ARP requests to obtain the gateway mac address, the P4 switch will capture and convert that packet into a reply with the fictitious gateway mac address.
 
-Then the source host will send a ICMP packet to the destination host and P4 switches will perform the same encapsulation. The only difference is the ethernet source and destination mac address will be overwritten to the gateway and destination hosts before delivering into the port.
+Then the source host will send a ICMP packet to the destination host and P4 switches will perform the same encapsulation. The only difference is the ethernet source and destination mac address will be overwritten to the gateway on destination switch before delivering into the port.
 
 **Testing**
 
