@@ -15,6 +15,7 @@ This repository contains an experimental [P4](https://github.com/p4lang) program
 ```
 git clone https://github.com/joncastro/p4vpc
 cd p4vpc
+pip install -r requirements.txt
 python p4vpc-commands.py
 sudo mnp4
 ```
