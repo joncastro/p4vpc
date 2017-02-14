@@ -13,7 +13,7 @@ This repository contains an experimental [P4](https://github.com/p4lang) program
 ### From source
 
 ```
-git clone https://github.com/p4kide/p4vpc
+git clone https://github.com/joncastro/p4vpc
 cd p4vpc
 python p4vpc-commands.py
 sudo mnp4
@@ -21,7 +21,7 @@ sudo mnp4
 
 ### Dependencies
 
-- [MiniP4](https://github.com/p4kide/minip4)
+- [MiniP4](https://github.com/joncastro/minip4)
 
 ### P4 switches commands
 
@@ -29,7 +29,7 @@ sudo mnp4
 
 ## Topology YAML
 
-The topology YAML file follows the [MiniP4 definition](https://github.com/p4kide/minip4#topology-yaml) and only adds `customer` optional property with it sets to `1` by default is not given.
+The topology YAML file follows the [MiniP4 definition](https://github.com/joncastro/minip4#topology-yaml) and only adds `customer` optional property with it sets to `1` by default is not given.
 
 ## Demo
 
